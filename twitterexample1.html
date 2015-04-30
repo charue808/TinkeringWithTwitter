@@ -1,0 +1,111 @@
+<head>
+	<title>twitter</title>
+</head>
+<body>
+	<div class="container">
+		<div>
+			<header class="navbar navbar-default" role="navigation">
+				<div class="navbar-header">
+					<a class="navbar-brand" href="/"><img id="logo" src="/image/Twitter_logo_3.png"></a>
+				</div>
+				<div class="collapse navbar-collapse" id="navigation">
+					<ul class="nav navbar-nav navbar-right">
+						{{> loginButtons}}
+					</ul>
+				</div>
+			</header>
+
+					{{#if currentUser}}
+                    {{else}}
+	                    <br/> <br/>
+	                    <p class="description">
+	                    	A global coommunity of friends and strangers answering one simple question: <span class="highlighted">What are you doing?</span>
+	                    	</p>
+                    {{/if}}	
+
+			<div id="main" class="row-fluid">
+				<div class="well">
+                    {{#if currentUser}}
+					{{> submitPost}}
+                    {{else}}
+                    {{> userFeature}}
+                    {{/if}}
+				</div>
+				{{> postsList}}
+			</div>
+		</div>
+	</div>
+</body>
+
+
+
+<template name="submitPost">
+	<form role="form">
+		<div class="form-group">
+			<label for="message">What are you doing?</label>
+			<div class="form-group">
+				<textarea class="form-control" rows="4" maxLength="140" name="message" id="textBody" type="text" value=""></textarea>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="text-left">
+				<p>Only first 140 characters will display</p>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="text-right">
+				<input type="submit" value="submit" class="btn btn-primary" id="button">
+			</div>
+		</div>
+	</form>
+</template>
+
+<template name="userFeature">
+    <div class="row" id="textBox">
+      
+	        <div>
+	        	<img id="theImage" src="/image/Screenshot1_1.png">      
+	        	<div class="btn-group-wrap">
+		        <!--	<img id="theTextBox" src="/image/wigflip-ds (1).gif">
+		        	<div id="helperIcon">
+		            	<img src="http://icons.iconarchive.com/icons/madoyster/favorite-monsters/128/monster-gray-icon.png">
+		        	</div> -->
+		            <div class="btn-group">
+		                <button type="button" id="button1" class="btn btn-default">1</button> 
+		                <button type="button" id="button2" class="btn btn-default">2</button> 
+		                <button type="button" id="button3" class="btn btn-default">3</button>  
+		            </div>
+	            </div>
+	        
+	    	</div>
+    </div>
+</template>
+
+<template name="postsList">
+	<p class="blueUnderline">
+		Recent Public Updates
+	</p>
+	<div class="posts">
+		{{#if postsLoaded}}  <!-- a postsList helpers. If posts are done loading -->
+		{{#each posts}}		 <!-- posts will show -->
+			{{> postItem}}
+		{{/each}}          	
+		{{else}}
+            {{> spinner}} <!-- if else posts are not loaded then the spinner spins -->              
+		{{/if}}
+	</div>
+</template>
+
+<template name="postItem">
+	<div class="post">
+		<div class="postContent">
+			<div class="postImage">
+			<img src={{authorImageURL}}>
+			</div>
+			<div class="postText" style="display:inline-block; max-width:520px">
+			<span class="blueUnderline"><strong>{{author}}</strong></span> {{body}} <span class="postTime blueUnderline" data-livestamp={{submittedText}}></span> 
+			</div>
+		</div>
+	</div>
+	<hr>
+</template>
